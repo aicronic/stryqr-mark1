@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import QRCode from "qrcode-generator-ts/js";
+import QRCodeGenerator from "qrcode-generator-ts/js";
 import { cn } from "@/lib/utils";
 
 interface QRCodeProps {
@@ -34,7 +34,7 @@ export const QRCode = ({
     qrRef.current.innerHTML = '';
 
     try {
-      const qr = new QRCode();
+      const qr = new QRCodeGenerator();
       qr.addData(value || "https://stryqr.com");
       qr.make();
 
@@ -103,4 +103,3 @@ export const QRCode = ({
     </div>
   );
 };
-
