@@ -37,13 +37,16 @@ export const QRCode = ({
         color: backgroundColor,
       },
       cornersSquareOptions: {
-        type: "square", // Keep corners square regardless of pattern
+        type: "square", // Always keep square
         color: color,
       },
       cornersDotOptions: {
-        type: pattern === "dots" ? "dot" : pattern === "rounded" ? "rounded" : "square",
+        type: "square", // Always keep square
         color: color,
       },
+      qrOptions: {
+        errorCorrectionLevel: 'H'
+      }
     });
 
     if (qrRef.current) {

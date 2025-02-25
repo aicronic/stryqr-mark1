@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { QRCode } from "@/components/QRCode";
 import { ColorPicker } from "@/components/ColorPicker";
@@ -14,7 +13,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-accent-light to-white p-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 animate-fade-in">
           <div className="inline-block px-4 py-1.5 mb-4 rounded-full bg-accent/10 text-accent text-sm font-medium">
             QR Code Generator
@@ -23,8 +22,9 @@ const Index = () => {
           <p className="text-gray-600">Generate beautiful, customizable QR codes instantly</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div className="space-y-8 glass-card p-8 rounded-2xl shadow-lg animate-fade-in">
+        <div className="grid md:grid-cols-3 gap-8 items-start">
+          {/* Content Panel - Left */}
+          <div className="glass-card p-8 rounded-2xl shadow-lg animate-fade-in">
             <div className="space-y-4">
               <Label htmlFor="qr-content">Content</Label>
               <Input
@@ -35,7 +35,21 @@ const Index = () => {
                 className="w-full"
               />
             </div>
+          </div>
 
+          {/* QR Preview - Center */}
+          <div className="flex items-center justify-center py-8">
+            <QRCode
+              value={qrValue}
+              color={qrColor}
+              backgroundColor={bgColor}
+              pattern={pattern}
+              className="hover-scale"
+            />
+          </div>
+
+          {/* Controls Panel - Right */}
+          <div className="glass-card p-8 rounded-2xl shadow-lg animate-fade-in space-y-8">
             <div className="space-y-4">
               <Label>Pattern Style</Label>
               <RadioGroup
@@ -67,16 +81,6 @@ const Index = () => {
               <Label>Background Color</Label>
               <ColorPicker selectedColor={bgColor} onChange={setBgColor} />
             </div>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <QRCode
-              value={qrValue}
-              color={qrColor}
-              backgroundColor={bgColor}
-              pattern={pattern}
-              className="hover-scale"
-            />
           </div>
         </div>
       </div>
