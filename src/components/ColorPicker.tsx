@@ -20,6 +20,11 @@ export const ColorPicker = ({ selectedColor, onChange, className }: ColorPickerP
     { name: "Ocean Blue", value: "#0EA5E9" },
     { name: "Forest Green", value: "#059669" },
     { name: "Ruby Red", value: "#E11D48" },
+    { name: "Soft Pink", value: "#FFDEE2" },
+    { name: "Soft Blue", value: "#D3E4FD" },
+    { name: "Soft Green", value: "#F2FCE2" },
+    { name: "Soft Orange", value: "#FEC6A1" },
+    { name: "Soft Yellow", value: "#FEF7CD" },
   ];
 
   return (

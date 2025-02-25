@@ -14,8 +14,8 @@ interface QRCodeProps {
 
 export const QRCode = ({
   value,
-  color = "#000000",
-  backgroundColor = "#FFFFFF",
+  color = "#9b87f5", // Default to purple
+  backgroundColor = "#FFFFFF", // Default to white
   pattern = "squares",
   size = 256,
   className,
@@ -59,10 +59,19 @@ export const QRCode = ({
     <div 
       className={cn(
         "relative p-8 rounded-2xl glass-card shadow-lg transition-all duration-300",
+        pattern === "rounded" && "!rounded-[32px]",
+        pattern === "dots" && "!rounded-full",
         className
       )}
     >
-      <div ref={qrRef} className="animate-fade-in" />
+      <div 
+        ref={qrRef} 
+        className={cn(
+          "animate-fade-in",
+          pattern === "rounded" && "rounded-2xl overflow-hidden",
+          pattern === "dots" && "rounded-full overflow-hidden"
+        )} 
+      />
     </div>
   );
 };
