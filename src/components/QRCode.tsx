@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { cn } from "@/lib/utils";
@@ -38,7 +37,7 @@ export const QRCode = ({
         color: backgroundColor,
       },
       cornersSquareOptions: {
-        type: pattern === "dots" ? "extra-rounded" : pattern === "rounded" ? "rounded" : "square",
+        type: "square", // Keep corners square regardless of pattern
         color: color,
       },
       cornersDotOptions: {
@@ -57,21 +56,11 @@ export const QRCode = ({
 
   return (
     <div 
+      ref={qrRef} 
       className={cn(
-        "relative p-8 rounded-2xl glass-card shadow-lg transition-all duration-300",
-        pattern === "rounded" && "!rounded-[32px]",
-        pattern === "dots" && "!rounded-full",
+        "animate-fade-in",
         className
-      )}
-    >
-      <div 
-        ref={qrRef} 
-        className={cn(
-          "animate-fade-in",
-          pattern === "rounded" && "rounded-2xl overflow-hidden",
-          pattern === "dots" && "rounded-full overflow-hidden"
-        )} 
-      />
-    </div>
+      )} 
+    />
   );
 };
