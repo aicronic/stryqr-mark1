@@ -52,18 +52,6 @@ export const QRCode = ({
         style={{
           borderRadius: pattern === "rounded" ? "16px" : "0",
         }}
-        dotsOptions={{
-          type: pattern === "dots" ? "dots" : pattern === "rounded" ? "rounded" : "square",
-          color: color,
-        }}
-        cornersSquareOptions={{
-          type: pattern === "dots" ? "dot" : pattern === "rounded" ? "extra-rounded" : "square",
-          color: color,
-        }}
-        cornersDotOptions={{
-          type: pattern === "dots" ? "dot" : pattern === "rounded" ? "dot" : "square",
-          color: color,
-        }}
       />
     </div>
   );
