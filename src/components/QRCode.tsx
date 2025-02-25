@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import QRCodeReact from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
 
 interface QRCodeProps {
@@ -37,13 +37,12 @@ export const QRCode = ({
       )}
     >
       <div ref={qrRef} className="animate-fade-in">
-        <QRCodeReact
+        <QRCodeSVG
           value={value || "https://stryqr.com"}
           size={size}
           fgColor={color}
           bgColor={backgroundColor}
           level="Q"
-          renderAs="svg"
           includeMargin
           style={{
             width: '100%',
