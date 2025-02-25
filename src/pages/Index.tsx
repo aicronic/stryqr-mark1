@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { QRCode } from "@/components/QRCode";
 import { ColorPicker } from "@/components/ColorPicker";
 import { Input } from "@/components/ui/input";
@@ -17,12 +17,27 @@ interface ValidationState {
 }
 
 const Index = () => {
-  const [qrValue, setQrValue] = useState("");
+  const defaultText = "StryQR: Made with love";
+  const qrRef = useRef<HTMLDivElement>(null);
+  
+  // Initialize all states with default values
+  const [qrValue, setQrValue] = useState(defaultText);
   const [qrColor, setQrColor] = useState("#000000");
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [pattern, setPattern] = useState<"dots" | "squares" | "rounded">("squares");
   const [dataType, setDataType] = useState<QRDataType>("text");
-  const [validation, setValidation] = useState<ValidationState>({ isValid: true, message: "" });
+  const [validation, setValidation] = useState<ValidationState>({ 
+    isValid: true, 
+    message: "" 
+  });
+
+  // Ensure QR code renders on initial mount
+  useEffect(() => {
+    if (qrRef.current) {
+      setQrValue(defaultText);
+      handleDataChange(defaultText, "text");
+    }
+  }, []); // Empty dependency array means this runs once on mount
 
   const validateInput = (value: string, type: QRDataType): ValidationState => {
     switch (type) {
@@ -44,11 +59,14 @@ const Index = () => {
     }
   };
 
+  // Modify handleDataChange to always update QR value for initial text
   const handleDataChange = (value: string, type: QRDataType) => {
     const validationResult = validateInput(value, type);
     setValidation(validationResult);
-    if (validationResult.isValid) {
-      setDataType(type);
+    setDataType(type);
+    
+    // Always set QR value for initial text or valid inputs
+    if (type === "text" || validationResult.isValid) {
       setQrValue(value);
     }
   };
@@ -60,6 +78,22 @@ const Index = () => {
       {type === "url" && "Generate a QR code that opens a website when scanned"}
       {type === "vcard" && "Share contact information in vCard format"}
       {type === "phone" && "Create a QR code that opens the phone dialer"}
+    </div>
+  );
+
+  const renderInputFeedback = (isValid: boolean, message: string) => (
+    <div className={`mt-1 flex items-center gap-2 text-sm ${isValid ? 'text-green-500' : 'text-red-500'}`}>
+      {isValid ? (
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-2 rounded-full bg-green-500" />
+          <span>Valid input</span>
+        </div>
+      ) : (
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-2 rounded-full bg-red-500" />
+          <span>{message}</span>
+        </div>
+      )}
     </div>
   );
 
@@ -94,7 +128,9 @@ const Index = () => {
                     placeholder="Enter any text..."
                     value={dataType === "text" ? qrValue : ""}
                     onChange={(e) => handleDataChange(e.target.value, "text")}
+                    className="transition-colors focus:border-accent"
                   />
+                  {qrValue && renderInputFeedback(true, "")}
                 </div>
               </TabsContent>
 
@@ -108,11 +144,9 @@ const Index = () => {
                     placeholder="https://example.com"
                     value={dataType === "url" ? qrValue : ""}
                     onChange={(e) => handleDataChange(e.target.value, "url")}
-                    className={!validation.isValid && dataType === "url" ? "border-red-500" : ""}
+                    className={`transition-colors ${!validation.isValid && dataType === "url" ? "border-red-500 focus:border-red-500" : "focus:border-accent"}`}
                   />
-                  {!validation.isValid && dataType === "url" && (
-                    <p className="text-sm text-red-500">{validation.message}</p>
-                  )}
+                  {qrValue && renderInputFeedback(validation.isValid, validation.message)}
                 </div>
               </TabsContent>
 

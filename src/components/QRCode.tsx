@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { cn } from "@/lib/utils";
 
@@ -19,12 +19,12 @@ export const QRCode = ({
   size = 256,
   className,
 }: QRCodeProps) => {
-  const [mounted, setMounted] = useState(false);
   const qrRef = useRef<HTMLDivElement>(null);
   const qrCode = useRef<QRCodeStyling>();
 
+  // Remove the mounted state as it's unnecessary
   useEffect(() => {
-    setMounted(true);
+    // Create QR instance
     qrCode.current = new QRCodeStyling({
       width: size,
       height: size,
@@ -37,11 +37,11 @@ export const QRCode = ({
         color: backgroundColor,
       },
       cornersSquareOptions: {
-        type: "square", // Always keep square
+        type: "square",
         color: color,
       },
       cornersDotOptions: {
-        type: "square", // Always keep square
+        type: "square",
         color: color,
       },
       qrOptions: {
@@ -49,13 +49,12 @@ export const QRCode = ({
       }
     });
 
+    // Immediately append to ref
     if (qrRef.current) {
       qrRef.current.innerHTML = '';
       qrCode.current?.append(qrRef.current);
     }
   }, [value, color, backgroundColor, pattern, size]);
-
-  if (!mounted) return null;
 
   return (
     <div 
