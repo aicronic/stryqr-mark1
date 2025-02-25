@@ -4,11 +4,13 @@ import { QRCode } from "@/components/QRCode";
 import { ColorPicker } from "@/components/ColorPicker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Index = () => {
   const [qrValue, setQrValue] = useState("");
   const [qrColor, setQrColor] = useState("#000000");
   const [bgColor, setBgColor] = useState("#FFFFFF");
+  const [pattern, setPattern] = useState<"dots" | "squares" | "rounded">("squares");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-accent-light to-white p-6">
@@ -22,7 +24,7 @@ const Index = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div className="space-y-8 bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-lg animate-fade-in">
+          <div className="space-y-8 glass-card p-8 rounded-2xl shadow-lg animate-fade-in">
             <div className="space-y-4">
               <Label htmlFor="qr-content">Content</Label>
               <Input
@@ -32,6 +34,28 @@ const Index = () => {
                 onChange={(e) => setQrValue(e.target.value)}
                 className="w-full"
               />
+            </div>
+
+            <div className="space-y-4">
+              <Label>Pattern Style</Label>
+              <RadioGroup
+                value={pattern}
+                onValueChange={(value) => setPattern(value as "dots" | "squares" | "rounded")}
+                className="flex gap-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="squares" id="squares" />
+                  <Label htmlFor="squares">Squares</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="dots" id="dots" />
+                  <Label htmlFor="dots">Dots</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="rounded" id="rounded" />
+                  <Label htmlFor="rounded">Rounded</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="space-y-4">
@@ -50,7 +74,8 @@ const Index = () => {
               value={qrValue}
               color={qrColor}
               backgroundColor={bgColor}
-              className="transform hover:scale-105 transition-transform duration-300"
+              pattern={pattern}
+              className="hover-scale"
             />
           </div>
         </div>
