@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
+import QRCodeStyling from "qr-code-styling";
 import { cn } from "@/lib/utils";
 
 interface QRCodeProps {
@@ -22,10 +22,36 @@ export const QRCode = ({
 }: QRCodeProps) => {
   const [mounted, setMounted] = useState(false);
   const qrRef = useRef<HTMLDivElement>(null);
+  const qrCode = useRef<QRCodeStyling>();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    qrCode.current = new QRCodeStyling({
+      width: size,
+      height: size,
+      data: value || "https://stryqr.com",
+      dotsOptions: {
+        type: pattern === "dots" ? "dots" : pattern === "rounded" ? "rounded" : "square",
+        color: color,
+      },
+      backgroundOptions: {
+        color: backgroundColor,
+      },
+      cornersSquareOptions: {
+        type: pattern === "dots" ? "extra-rounded" : pattern === "rounded" ? "rounded" : "square",
+        color: color,
+      },
+      cornersDotOptions: {
+        type: pattern === "dots" ? "dot" : pattern === "rounded" ? "rounded" : "square",
+        color: color,
+      },
+    });
+
+    if (qrRef.current) {
+      qrRef.current.innerHTML = '';
+      qrCode.current?.append(qrRef.current);
+    }
+  }, [value, color, backgroundColor, pattern, size]);
 
   if (!mounted) return null;
 
@@ -36,21 +62,7 @@ export const QRCode = ({
         className
       )}
     >
-      <div ref={qrRef} className="animate-fade-in">
-        <QRCodeSVG
-          value={value || "https://stryqr.com"}
-          size={size}
-          fgColor={color}
-          bgColor={backgroundColor}
-          level="Q"
-          includeMargin
-          style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: pattern === "rounded" ? "12px" : "0",
-          }}
-        />
-      </div>
+      <div ref={qrRef} className="animate-fade-in" />
     </div>
   );
 };
