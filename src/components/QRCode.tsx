@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 
 interface QRCodeProps {
   value: string;
@@ -22,7 +24,6 @@ export const QRCode = ({
   const qrRef = useRef<HTMLDivElement>(null);
   const qrCode = useRef<QRCodeStyling>();
 
-  // Remove the mounted state as it's unnecessary
   useEffect(() => {
     // Create QR instance
     qrCode.current = new QRCodeStyling({
@@ -56,13 +57,30 @@ export const QRCode = ({
     }
   }, [value, color, backgroundColor, pattern, size]);
 
+  const downloadQR = async () => {
+    if (qrCode.current) {
+      await qrCode.current.download({
+        extension: "png",
+        name: `stryqr-${Date.now()}`
+      });
+    }
+  };
+
   return (
-    <div 
-      ref={qrRef} 
-      className={cn(
-        "animate-fade-in",
-        className
-      )} 
-    />
+    <div className="flex flex-col items-center gap-4">
+      <div 
+        ref={qrRef} 
+        className={cn("animate-fade-in", className)} 
+      />
+      <Button
+        onClick={downloadQR}
+        variant="outline"
+        size="sm"
+        className="flex items-center gap-2 hover:bg-accent/10"
+      >
+        <Download className="h-4 w-4" />
+        <span>Download QR</span>
+      </Button>
+    </div>
   );
 };

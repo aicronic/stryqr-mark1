@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+qr-code-styling - npm.html
+qr-code-styling - npm.pdf

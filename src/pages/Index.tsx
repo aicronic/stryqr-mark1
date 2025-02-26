@@ -8,6 +8,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { HelpCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type QRDataType = "text" | "url" | "vcard" | "email" | "phone";
 
@@ -111,7 +113,14 @@ const Index = () => {
           <div className="inline-block px-4 py-1.5 mb-4 rounded-full bg-accent/10 text-accent text-sm font-medium">
             QR Code Generator
           </div>
-          <h1 className="text-4xl font-bold text-primary mb-4">StryQR</h1>
+          <h1 className="text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-accent to-purple-600 bg-clip-text text-transparent">
+              Stry
+            </span>
+            <span className="text-primary">
+              QR
+            </span>
+          </h1>
           <p className="text-gray-600">Generate beautiful, customizable QR codes instantly</p>
         </div>
 
@@ -222,13 +231,13 @@ const Index = () => {
           </div>
 
           {/* QR Preview - Center */}
-          <div className="flex items-center justify-center py-8">
+          <div className="flex items-center justify-center">
             <QRCode
               value={qrValue}
               color={qrColor}
               backgroundColor={bgColor}
               pattern={pattern}
-              className="hover-scale"
+              size={300}
             />
           </div>
 
