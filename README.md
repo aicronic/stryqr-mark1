@@ -1,69 +1,76 @@
-# Welcome to your Lovable project
+# StryQR ✨
 
-## Project info
+StryQR is a modern, elegant QR code generator that lets you create beautiful and functional QR codes with ease. Built with React and TypeScript, it offers a seamless experience for generating customizable QR codes.
 
-**URL**: https://lovable.dev/projects/7595ea60-3235-4281-bb62-9db826f6a34e
+## ✨ Features
 
-## How can I edit this code?
+### 🎨 Multiple Content Types
+- **Text**: Generate QR codes for any text content
+- **URLs**: Create scannable website links
+- **vCards**: Share contact information easily
+- **Phone Numbers**: Direct dial QR codes
 
-There are several ways of editing your application.
+### 🎯 Customization Options
+- **Pattern Styles**:
+  - Square (classic)
+  - Dots (modern)
+  - Rounded (smooth)
+- **Colors**: Choose from a curated selection of colors
+- **Background**: Customize background colors
+- **Size**: Adjustable QR code dimensions
 
-**Use Lovable**
+### 💫 User Experience
+- Clean, intuitive interface
+- Real-time QR code preview
+- One-click downloads
+- Mobile-responsive design
+- Glass-morphism UI elements
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7595ea60-3235-4281-bb62-9db826f6a34e) and start prompting.
+## 🚀 Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Visit [StryQR](https://stryqr.com)
+2. Choose your content type (Text, URL, vCard, or Phone)
+3. Enter your content
+4. Customize the appearance
+5. Download your QR code
 
-**Use your preferred IDE**
+## 💡 Use Cases
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Business cards and marketing materials
+- Social media profile sharing
+- Contact information exchange
+- Website and app promotions
+- Event ticketing and check-ins
+- Restaurant menus and catalogs
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Technical Details
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
+Built with:
+- React + TypeScript
 - Tailwind CSS
+- shadcn/ui components
+- qr-code-styling library
 
-## How can I deploy this project?
+## 📱 Browser Support
 
-Simply open [Lovable](https://lovable.dev/projects/7595ea60-3235-4281-bb62-9db826f6a34e) and click on Share -> Publish.
+Compatible with all modern browsers:
+- Chrome
+- Firefox
+- Safari
+- Edge
 
-## I want to use a custom domain - is that possible?
+## 🔒 Privacy
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+StryQR generates all QR codes locally in your browser. No data is stored or transmitted to any servers.
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines for more details.
+
+## 📝 License
+
+MIT License - feel free to use and modify as needed!
+
+---
+
+Made with 💜 by [Rishabh Bhardwaz](https://github.com/aicronic) 
