@@ -16,6 +16,14 @@ interface ValidationState {
   message: string;
 }
 
+// Add interface for vCard data
+interface VCardData {
+  fullName: string;
+  phone: string;
+  email: string;
+  organization: string;
+}
+
 const Index = () => {
   const defaultText = "StryQR: Made with love";
   const qrRef = useRef<HTMLDivElement>(null);
@@ -29,6 +37,14 @@ const Index = () => {
   const [validation, setValidation] = useState<ValidationState>({ 
     isValid: true, 
     message: "" 
+  });
+
+  // Add vCard state
+  const [vCardData, setVCardData] = useState<VCardData>({
+    fullName: "",
+    phone: "",
+    email: "",
+    organization: ""
   });
 
   // Ensure QR code renders on initial mount
@@ -63,6 +79,19 @@ const Index = () => {
     } else {
       setQrValue(value);
     }
+  };
+
+  // Add vCard generator function
+  const generateVCard = (data: VCardData): string => {
+    return [
+      "BEGIN:VCARD",
+      "VERSION:3.0",
+      `FN:${data.fullName}`,
+      data.phone ? `TEL:${data.phone}` : "",
+      data.email ? `EMAIL:${data.email}` : "",
+      data.organization ? `ORG:${data.organization}` : "",
+      "END:VCARD"
+    ].filter(Boolean).join("\n");
   };
 
   const renderHelperText = (type: QRDataType) => (
@@ -132,21 +161,43 @@ const Index = () => {
                   <div className="space-y-4">
                     <Input
                       placeholder="Full Name"
+                      value={vCardData.fullName}
                       onChange={(e) => {
-                        const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${e.target.value}\nEND:VCARD`;
-                        handleDataChange(vcard, "vcard");
+                        const newData = { ...vCardData, fullName: e.target.value };
+                        setVCardData(newData);
+                        handleDataChange(generateVCard(newData), "vcard");
                       }}
                     />
                     <Input 
                       placeholder="Phone"
                       type="tel"
                       pattern="[0-9\s\-\+]+"
+                      value={vCardData.phone}
+                      onChange={(e) => {
+                        const newData = { ...vCardData, phone: e.target.value };
+                        setVCardData(newData);
+                        handleDataChange(generateVCard(newData), "vcard");
+                      }}
                     />
                     <Input 
                       placeholder="Email"
                       type="email"
+                      value={vCardData.email}
+                      onChange={(e) => {
+                        const newData = { ...vCardData, email: e.target.value };
+                        setVCardData(newData);
+                        handleDataChange(generateVCard(newData), "vcard");
+                      }}
                     />
-                    <Input placeholder="Organization" />
+                    <Input 
+                      placeholder="Organization"
+                      value={vCardData.organization}
+                      onChange={(e) => {
+                        const newData = { ...vCardData, organization: e.target.value };
+                        setVCardData(newData);
+                        handleDataChange(generateVCard(newData), "vcard");
+                      }}
+                    />
                   </div>
                 </div>
               </TabsContent>
