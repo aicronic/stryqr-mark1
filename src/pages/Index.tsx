@@ -39,15 +39,9 @@ const Index = () => {
     }
   }, []); // Empty dependency array means this runs once on mount
 
+  // Remove URL case from validation since we're not validating URLs anymore
   const validateInput = (value: string, type: QRDataType): ValidationState => {
     switch (type) {
-      case "url":
-        try {
-          new URL(value);
-          return { isValid: true, message: "" };
-        } catch {
-          return { isValid: false, message: "Please enter a valid URL (e.g., https://example.com)" };
-        }
       case "phone":
         const phoneRegex = /^\+?[\d\s-]{10,}$/;
         return {
@@ -59,14 +53,14 @@ const Index = () => {
     }
   };
 
-  // Modify handleDataChange to always update QR value for initial text
+  // Simplify handleDataChange to just wrap URLs
   const handleDataChange = (value: string, type: QRDataType) => {
-    const validationResult = validateInput(value, type);
-    setValidation(validationResult);
     setDataType(type);
     
-    // Always set QR value for initial text or valid inputs
-    if (type === "text" || validationResult.isValid) {
+    if (type === "url") {
+      // Only add https:// if there's actual content
+      setQrValue(value === "" ? "" : `https://${value.replace(/^https?:\/\//, '')}`);
+    } else {
       setQrValue(value);
     }
   };
@@ -78,22 +72,6 @@ const Index = () => {
       {type === "url" && "Generate a QR code that opens a website when scanned"}
       {type === "vcard" && "Share contact information in vCard format"}
       {type === "phone" && "Create a QR code that opens the phone dialer"}
-    </div>
-  );
-
-  const renderInputFeedback = (isValid: boolean, message: string) => (
-    <div className={`mt-1 flex items-center gap-2 text-sm ${isValid ? 'text-green-500' : 'text-red-500'}`}>
-      {isValid ? (
-        <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-green-500" />
-          <span>Valid input</span>
-        </div>
-      ) : (
-        <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span>{message}</span>
-        </div>
-      )}
     </div>
   );
 
@@ -130,7 +108,6 @@ const Index = () => {
                     onChange={(e) => handleDataChange(e.target.value, "text")}
                     className="transition-colors focus:border-accent"
                   />
-                  {qrValue && renderInputFeedback(true, "")}
                 </div>
               </TabsContent>
 
@@ -140,13 +117,11 @@ const Index = () => {
                   {renderHelperText("url")}
                   <Input
                     id="url-content"
-                    type="url"
-                    placeholder="https://example.com"
-                    value={dataType === "url" ? qrValue : ""}
+                    placeholder="example.com"
+                    value={dataType === "url" ? qrValue.replace(/^https?:\/\//, '') : ""}
                     onChange={(e) => handleDataChange(e.target.value, "url")}
-                    className={`transition-colors ${!validation.isValid && dataType === "url" ? "border-red-500 focus:border-red-500" : "focus:border-accent"}`}
+                    className="w-full"
                   />
-                  {qrValue && renderInputFeedback(validation.isValid, validation.message)}
                 </div>
               </TabsContent>
 
